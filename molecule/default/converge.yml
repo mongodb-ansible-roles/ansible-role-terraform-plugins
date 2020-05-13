@@ -1,0 +1,9 @@
+---
+- become: true
+  name: Converge
+  hosts: all
+  roles:
+    - role: ansible-role-terraform-plugins
+      vars:
+        terraform_plugins:
+          - https://github.com/gavinbunney/terraform-provider-kubectl/releases/download/v1.4.2/terraform-provider-kubectl-linux-amd64

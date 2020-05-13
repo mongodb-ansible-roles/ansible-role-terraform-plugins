@@ -1,0 +1,14 @@
+---
+- name: Create plugins directory
+  file:
+    path: "{{ ansible_env.HOME }}/.terraform.d/plugins"
+    recurse: true
+    state: directory
+  register: result
+
+- name: Download Terraform plugins
+  get_url:
+    dest: "{{ result.path }}/{{ item.split('/')[-1] | regex_replace('^(terraform-provider-\\w+)-.*', '\\1') }}"
+    mode: 0777
+    url: "{{ item }}"
+  with_items: "{{ terraform_plugins }}"
